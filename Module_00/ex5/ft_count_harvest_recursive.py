@@ -10,3 +10,6 @@ def ft_count_harvest_recursive():
             count(t, d + 1)
 
     count(t, d)
+
+
+ft_count_harvest_recursive(int char ft_count_harvest_recursive_2())

@@ -1,45 +1,58 @@
 class Plant:
-    def __init__(self, name, height, age):
-        self.name = name
-        self.height = height
-        self.age = age
-        self.last_growth = 0
+    """
+    A class to represent a plant with growth capabilities.
+    """
 
-    def get_info(self):
-        print(f"{self.name.capitalize()}: {self.height}cm, {self.age} days old")
+    def __init__(self, name: str, height: int, age: int) -> None:
+        """
+        Initialize a new Plant instance.
+        """
+        self.name: str = name
+        self.height: int = height
+        self.age: int = age
+        self.last_growth: int = 0
 
-    def grow(self, growth_amount):
+    def get_info(self) -> None:
+        """
+        Print current plant status.
+        """
+        print(f"{self.name.capitalize()}: {self.height}cm, "
+              f"{self.age} days old")
+
+    def grow(self, growth_amount: int) -> None:
+        """
+        Simulate plant growth.
+
+        Args:
+            growth_amount (int): Amount to grow in cm.
+        """
         self.height += growth_amount
         self.last_growth = growth_amount
-    def age_one_day(self):
+
+    def age_one_day(self) -> None:
+        """
+        Increase plant age by one day.
+        """
         self.age += 1
 
-def main():
+
+def main() -> None:
+    """
+    Simulate a week of plant growth.
+    """
     print("=== Day 1 ===")
     rose = Plant("Rose", 25, 30)
-    sunflower = Plant("Sunflower", 80, 45)
-    cactus = Plant("Cactus", 15, 120)
 
     rose.get_info()
-    sunflower.get_info()
-    cactus.get_info()
 
-    for day in range(1, 28):
-
-        rose.grow(2)
-        sunflower.grow(5)
-        cactus.grow(1)
-
+    for day in range(1, 8):
+        rose.grow(1)
         rose.age_one_day()
-        sunflower.age_one_day()
-        cactus.age_one_day()
 
-        if (day % 7 == 0):
-            print(f"=== Day {day} ===")
-            rose.get_info()
-            sunflower.get_info()
-            cactus.get_info()
-            print(f"growth this week - Rose: +{rose.last_growth}cm, Sunflower: +{sunflower.last_growth}cm, Cactus: +{cactus.last_growth}cm")
+    print("=== Day 7 ===")
+    rose.get_info()
+    print(f"Growth this week: +{rose.height - 25}cm")
+
 
 if __name__ == "__main__":
     main()

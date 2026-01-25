@@ -1,0 +1,9 @@
+{
+  "test_module_01.py::TestModule01::test_ex0": true,
+  "test_module_01.py::TestModule01::test_ex1": true,
+  "test_module_01.py::TestModule01::test_ex2": true,
+  "test_module_01.py::TestModule01::test_ex3": true,
+  "test_module_01.py::TestModule01::test_ex4": true,
+  "test_module_01.py::TestModule01::test_ex5": true,
+  "test_module_01.py::TestModule01::test_ex6": true
+}

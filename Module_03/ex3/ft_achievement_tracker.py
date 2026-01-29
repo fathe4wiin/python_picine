@@ -1,14 +1,33 @@
 def main():
     print("=== Achievement Tracker System ===")
 
-    alice_achievements = {'First Blood', 'Unstoppable', 'Baron Slayer', 'Visionary'}
-    bob_achievements = {'First Blood', 'Dragon Slayer', 'Pentakill', 'Visionary'}
-    charlie_achievements = {'Dragon Slayer', 'Unstoppable', 'Baron Slayer', 'Sharpshooter', 'Visionary'}
+    alice_achievements = {
+        'First Blood',
+        'Unstoppable',
+        'Baron Slayer',
+        'Visionary'}
+    bob_achievements = {
+        'First Blood',
+        'Dragon Slayer',
+        'Pentakill',
+        'Visionary'}
+    charlie_achievements = {
+        'Dragon Slayer',
+        'Unstoppable',
+        'Baron Slayer',
+        'Sharpshooter',
+        'Visionary'}
 
     fathe4wiin_achievements = {
-        'First Blood', 'Dragon Slayer', 'Unstoppable', 'Baron Slayer',
-        'Pentakill', 'Sharpshooter', 'Visionary', 'Legendary', 'Ultimate Master'
-    }
+        'First Blood',
+        'Dragon Slayer',
+        'Unstoppable',
+        'Baron Slayer',
+        'Pentakill',
+        'Sharpshooter',
+        'Visionary',
+        'Legendary',
+        'Ultimate Master'}
 
     print(f"Player alice achievements: {alice_achievements}")
     print(f"Player bob achievements: {bob_achievements}")
@@ -17,14 +36,28 @@ def main():
 
     print("\n=== Achievement Analytics ===")
 
-    all_achievements = alice_achievements | bob_achievements | charlie_achievements | fathe4wiin_achievements
+    all_achievements = (
+        alice_achievements |
+        bob_achievements |
+        charlie_achievements |
+        fathe4wiin_achievements
+    )
     print(f"All unique achievements: {all_achievements}")
     print(f"Total unique achievements: {len(all_achievements)}")
 
-    common_to_all = alice_achievements & bob_achievements & charlie_achievements & fathe4wiin_achievements
+    common_to_all = (
+        alice_achievements &
+        bob_achievements &
+        charlie_achievements &
+        fathe4wiin_achievements
+    )
     print(f"Common to all players: {common_to_all}")
 
-    players = [alice_achievements, bob_achievements, charlie_achievements, fathe4wiin_achievements]
+    players = [
+        alice_achievements,
+        bob_achievements,
+        charlie_achievements,
+        fathe4wiin_achievements]
     rare = set()
 
     for achievement in all_achievements:
@@ -47,7 +80,8 @@ def main():
     bob_unique = bob_achievements - alice_achievements
     print(f"Bob unique: {bob_unique}")
 
-    fathe4wiin_unique = fathe4wiin_achievements - (alice_achievements | bob_achievements | charlie_achievements)
+    fathe4wiin_unique = fathe4wiin_achievements - \
+        (alice_achievements | bob_achievements | charlie_achievements)
     print(f"fathe4wiin unique: {fathe4wiin_unique}")
 
 

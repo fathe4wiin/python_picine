@@ -1,13 +1,14 @@
 import sys
 
-def main():    
+
+def main():
     inventory = dict()
 
     if len(sys.argv) < 2:
         print("Error: No arguments provided")
         print("Correct form: item:quantity (for example: potion:3)")
         return
-    
+
     try:
         for arg in sys.argv[1:]:
             if ':' in arg:
@@ -19,7 +20,7 @@ def main():
                 raise ValueError(arg)
     except ValueError:
         print(f"Error: invalid argument '{arg}'")
-        print(f"Correct form: item:quantity (for example: potion:3)")
+        print("Correct form: item:quantity (for example: potion:3)")
         return
 
     print("\n=== Inventory System Analysis ===")
@@ -57,8 +58,12 @@ def main():
 
     most_abundant = abundant_items[0]
     least_abundant = scarce_items[0]
-    print(f"Most abundant: {most_abundant} ({inventory.get(most_abundant)} units)")
-    print(f"Least abundant: {least_abundant} ({inventory.get(least_abundant)} units)")
+    print(
+        f"Most abundant: {most_abundant} ({
+            inventory.get(most_abundant)} units)")
+    print(
+        f"Least abundant: {least_abundant} ({
+            inventory.get(least_abundant)} units)")
 
     print("\n=== Item Categories ===")
     mod_cat = dict()
@@ -88,6 +93,7 @@ def main():
         if key == "sword":
             found_sword = True
     print(f"Sample lookup - 'sword' in inventory: {found_sword}")
+
 
 if __name__ == "__main__":
     main()

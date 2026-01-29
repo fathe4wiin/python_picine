@@ -1,5 +1,6 @@
 import sys
 
+
 def main():
     print("=== Command Quest ===")
     if len(sys.argv) < 2:
@@ -12,6 +13,7 @@ def main():
     for arg in sys.argv[1:]:
         print(f"Argument {count}: {arg}")
         count += 1
+
 
 if __name__ == "__main__":
     main()

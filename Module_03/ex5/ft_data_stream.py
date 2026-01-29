@@ -1,5 +1,6 @@
 import time
 
+
 def fibonacci_gen():
     a = 0
     b = 1
@@ -20,23 +21,25 @@ def prime_gen():
             yield n
         n += 1
 
+
 def lol_event_stream():
     events = [
-        (1, "Ahri",    7, "kill",      "mid",  False, False),
-        (2, "Yasuo",   11, "death",    "baron", True, False),
-        (3, "Zed",     12, "first blood", "top", False, False),
-        (4, "Jinx",     9, "turret destroyed", "bot", False, False),
-        (5, "Thresh",   13, "assist",   "bot",  False, False),
-        (6, "Lux",      15, "ultimate", "mid",  False, False),
-        (7, "Ezreal",   16, "dragon steal", "dragon", True, False),
-        (8, "Lee Sin",  14, "insec",    "none", False, False),
-        (9, "Ashe",     18, "pentakill","mid",  False, True),
-        (10, "Darius",  10, "shutdown", "top",  False, False),
+        (1, "Ahri", 7, "kill", "mid", False, False),
+        (2, "Yasuo", 11, "death", "baron", True, False),
+        (3, "Zed", 12, "first blood", "top", False, False),
+        (4, "Jinx", 9, "turret destroyed", "bot", False, False),
+        (5, "Thresh", 13, "assist", "bot", False, False),
+        (6, "Lux", 15, "ultimate", "mid", False, False),
+        (7, "Ezreal", 16, "dragon steal", "dragon", True, False),
+        (8, "Lee Sin", 14, "insec", "none", False, False),
+        (9, "Ashe", 18, "pentakill", "mid", False, True),
+        (10, "Darius", 10, "shutdown", "top", False, False),
     ]
     index = 0
     while index < len(events):
         yield events[index]
         index += 1
+
 
 def main():
     print("=== Game Data Stream Processor ===\n")
@@ -47,8 +50,18 @@ def main():
 
     event = lol_event_stream()
     for _ in range(1, 6):
-        num, champ, level, event_type, lane, is_jungle_event, is_legendary_event = next(event)
-        output = f"Event {num}: {champ} (level {level}), {event_type} on {lane}"
+        (
+            num,
+            champ,
+            level,
+            event_type,
+            lane,
+            is_jungle_event,
+            is_legendary_event,
+        ) = next(event)
+        output = (
+            f"Event {num}: {champ} (level {level}), {event_type} on {lane}"
+        )
         if is_jungle_event:
             output += " [Jungle event]"
         if is_legendary_event:
@@ -64,7 +77,15 @@ def main():
     before = time.time()
 
     for _ in range(1, count + 1):
-        num, champ, level, event_type, lane, is_jungle_event, is_legendary_event = next(event)
+        (
+            num,
+            champ,
+            level,
+            event_type,
+            lane,
+            is_jungle_event,
+            is_legendary_event,
+        ) = next(event)
         if level >= 10:
             high_level += 1
         if is_jungle_event:
@@ -80,7 +101,7 @@ def main():
     print(f"Processing time: {time.time() - before:.9f} seconds\n")
     print("=== Generator Demonstration ===")
     fib = fibonacci_gen()
-    print("Fibonacci sequence (first 10): ", end= "")
+    print("Fibonacci sequence (first 10): ", end="")
     for i in range(1, 11):
         print(f"{next(fib)}", end="")
         if i < 10:

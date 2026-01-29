@@ -1,9 +1,11 @@
 import sys
 
+
 def main():
     print("=== Player Score Analytics ===")
     if len(sys.argv) < 2:
-        print("No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ...")
+        print("No scores provided. Usage: python3",
+              "ft_score_analytics.py <score1> <score2> ...")
         return
 
     scores = []
@@ -22,7 +24,6 @@ def main():
     print(f"High Score: {max(scores)}")
     print(f"Low Score: {min(scores)} (get good :F)")
     print(f"Score Range: {max(scores) - min(scores)}")
-
 
 
 if __name__ == "__main__":

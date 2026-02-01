@@ -1,7 +1,7 @@
-def main():
+def main() -> None:
     print("=== CYBER ARCHIVES - DATA RECOVERY SYSTEM ===")
     print()
-    file_name = "ancient_fragment.txt"
+    file_name: str = "ancient_fragment.txt"
     print(f"Accessing file: {file_name}")
     try:
         vfile = open(file_name)

@@ -1,36 +1,39 @@
-from abc import ABC, abstractmethod
-from typing import Any, List, Dict, Union, Optional, Protocol
 import time
+from abc import ABC, abstractmethod
+from typing import Any, Dict, List, Protocol, Union
 from collections import Counter
 
-# 1. ProcessingStage Protocol (Duck Typing)
-# Any class with a process() method automatically implements this.
+
 class ProcessingStage(Protocol):
     def process(self, data: Any) -> Any:
         ...
 
-# 2. Stage Implementations (Satisfy the Protocol)
+
 class InputStage:
     def process(self, data: Any) -> Any:
         if data is None:
             raise ValueError("Invalid Input: Data is None")
         return data
 
+
 class TransformStage:
     def process(self, data: Any) -> Any:
-        # Simple transformation: cleaning and converting to string
         return str(data).strip().upper()
+
 
 class OutputStage:
     def process(self, data: Any) -> str:
         return f"Final Nexus Output: {data}"
 
-# 3. Pipeline Base Class (ABC)
+
 class ProcessingPipeline(ABC):
     def __init__(self, pipeline_id: str) -> None:
         self.pipeline_id = pipeline_id
         self.stages: List[ProcessingStage] = []
-        self.performance_stats = {"count": 0, "total_time": 0.0}
+        self.performance_stats: Dict[str, Union[int, float]] = {
+            "count": 0,
+            "total_time": 0.0
+        }
 
     def add_stage(self, stage: ProcessingStage) -> None:
         self.stages.append(stage)
@@ -38,44 +41,48 @@ class ProcessingPipeline(ABC):
     def run_pipeline(self, data: Any) -> Any:
         start_time = time.perf_counter()
         current_val = data
-        
+
         try:
             for stage in self.stages:
                 current_val = stage.process(current_val)
-            
-            self.performance_stats["count"] += 1
-            self.performance_stats["total_time"] += (time.perf_counter() - start_time)
+
+            self.performance_stats["count"] = int(
+                self.performance_stats["count"]) + 1
+            self.performance_stats["total_time"] = float(
+                self.performance_stats["total_time"]) + (
+                    time.perf_counter() - start_time
+                )
             return current_val
-            
+
         except Exception as e:
-            # Error Recovery logic
-            print(f"!!! Error in {self.pipeline_id}: {e}")
-            print("Initiating recovery: Switching to backup formatting...")
+            print(f"Error detected in pipeline {self.pipeline_id}: {e}")
+            print("Recovery initiated: Switching to backup processor")
             return f"RECOVERED_DATA: {str(data)}"
 
     @abstractmethod
-    def process(self, data: Any) -> Union[str, Any]:
+    def process(self, data: Any) -> Any:
         pass
 
-# 4. Data Adapters (Inheritance)
+
 class JSONAdapter(ProcessingPipeline):
     def process(self, data: Any) -> str:
-        # Simulate format-specific logic
-        return self.run_pipeline(data)
+        return str(self.run_pipeline(data))
+
 
 class CSVAdapter(ProcessingPipeline):
     def process(self, data: Any) -> str:
-        return self.run_pipeline(data)
+        return str(self.run_pipeline(data))
+
 
 class StreamAdapter(ProcessingPipeline):
     def process(self, data: Any) -> str:
-        return self.run_pipeline(data)
+        return str(self.run_pipeline(data))
 
-# 5. Nexus Manager (Orchestrator)
+
 class NexusManager:
     def __init__(self) -> None:
         self.pipelines: List[ProcessingPipeline] = []
-        self.event_log = Counter()
+        self.event_log: Counter = Counter()
 
     def add_pipeline(self, pipeline: ProcessingPipeline) -> None:
         self.pipelines.append(pipeline)
@@ -90,20 +97,18 @@ class NexusManager:
 
     def show_metrics(self) -> None:
         print("\n=== Performance Monitoring ===")
-        # Dict comprehension for stats
-        report = {p.pipeline_id: f"{p.performance_stats['total_time']:.4f}s" for p in self.pipelines}
-        for pid, ptime in report.items():
-            print(f"Pipeline {pid} Efficiency: {ptime}")
+        for p in self.pipelines:
+            pid = p.pipeline_id
+            ptime = p.performance_stats["total_time"]
+            print(f"Pipeline {pid} Efficiency: {ptime:.4f}s")
 
-# 6. Main Execution & Pipeline Chaining
+
 if __name__ == "__main__":
     manager = NexusManager()
 
-    # Setup Pipelines
     json_pipe = JSONAdapter("JSON_PROC_01")
     csv_pipe = CSVAdapter("CSV_PROC_01")
 
-    # Add Stages (Composition)
     for p in [json_pipe, csv_pipe]:
         p.add_stage(InputStage())
         p.add_stage(TransformStage())
@@ -112,19 +117,22 @@ if __name__ == "__main__":
     manager.add_pipeline(json_pipe)
     manager.add_pipeline(csv_pipe)
 
-    # 1. Normal Processing
     samples = {
         "JSON_PROC_01": {"sensor": "temp", "val": 25},
         "CSV_PROC_01": "user_id, login_time, ip_addr"
     }
     manager.orchestrate_all(samples)
 
-    # 2. Pipeline Chaining Demo
     print("\n=== Pipeline Chaining Demo ===")
     raw_input = "Chain_Start"
     intermediate = json_pipe.process(raw_input)
     final_chain = csv_pipe.process(intermediate)
     print(f"Chain Result (Pipe A -> Pipe B): {final_chain}")
 
-    # 3. Performance Stats
+    print("\n=== Error Recovery Test ===")
+    print("Simulating pipeline failure...")
+    error_result = json_pipe.process(None)
+    print(f"Recovery successful: {error_result}")
+
     manager.show_metrics()
+    print("\nNexus Integration complete. All systems operational.")

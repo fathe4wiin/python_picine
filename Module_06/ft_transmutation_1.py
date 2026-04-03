@@ -1,4 +1,4 @@
-import transmutation
+import alchemy.transmutation as transmutation
 
 print("=== Transmutation 1 ===")
 print("Import transmutation module directly")

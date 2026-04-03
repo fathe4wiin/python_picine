@@ -1,4 +1,4 @@
-def light_validate_ingredients(ingredients: str) -> str:
+def validate_ingredients(ingredients: str) -> str:
     # Late import avoids module-level circular dependency.
     from .light_spellbook import light_spell_allowed_ingredients
 

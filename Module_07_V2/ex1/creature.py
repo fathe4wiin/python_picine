@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
+
 class Creature(ABC):
     def __init__(self, name: str, element_type: str):
         self.name = name
@@ -13,10 +14,12 @@ class Creature(ABC):
     def describe(self) -> str:
         return f"{self.name} is a {self.element_type} type Creature"
 
+
 class HealCapability(ABC):
     @abstractmethod
     def heal(self, target: Optional[str] = None) -> str:
         pass
+
 
 class TransformCapability(ABC):
     def __init__(self):
@@ -30,6 +33,7 @@ class TransformCapability(ABC):
     def revert(self) -> str:
         pass
 
+
 class Sproutling(Creature, HealCapability):
     def __init__(self, name: str, element_type: str):
         Creature.__init__(self, name, element_type)
@@ -40,6 +44,7 @@ class Sproutling(Creature, HealCapability):
     def heal(self, target: Optional[str] = None) -> str:
         return f"{self.name} heals itself for a small amount"
 
+
 class Bloomelle(Creature, HealCapability):
     def __init__(self, name: str, element_type: str):
         Creature.__init__(self, name, element_type)
@@ -49,6 +54,7 @@ class Bloomelle(Creature, HealCapability):
 
     def heal(self, target: Optional[str] = None) -> str:
         return f"{self.name} heals itself and others for a large amount"
+
 
 class Shiftling(Creature, TransformCapability):
     def __init__(self, name: str, element_type: str):
@@ -67,6 +73,7 @@ class Shiftling(Creature, TransformCapability):
     def revert(self) -> str:
         self.is_transformed = False
         return f"{self.name} returns to normal."
+
 
 class Morphagon(Creature, TransformCapability):
     def __init__(self, name: str, element_type: str):
